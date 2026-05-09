@@ -12,6 +12,40 @@ const options =
 document.getElementById("todayDate").innerHTML = 
   "Today is: " + today.toLocaleDateString("en-US", options);
 
+async function loadStates()
+{
+  try
+  {
+    const response = await fetch("states.json");
+
+    const states = await response.json();
+
+    const dropdown =
+      document..getElecmentById("state");
+
+    dropdwon.innerHTML =
+      '<option value="">Select</options>';
+
+    states.forEach(state =>
+      {
+        const option =
+          document.createElement("option");
+
+        option.value = state;
+        option.textContent = state;
+
+        dropdown.appendChild(option);
+      });
+  }
+
+  catch(error)
+  {
+    console.log(
+      "Error loading states:",
+      error
+      );
+  }
+}
 // Error Handling
 function showError(id, msg)
 {
@@ -249,3 +283,5 @@ document.getElementById("submitBtn").style.display = "none";
 
 return valid;
 }
+
+loadStates();
