@@ -21,10 +21,10 @@ async function loadStates()
     const states = await response.json();
 
     const dropdown =
-      document..getElecmentById("state");
+      document.getElementById("state");
 
-    dropdwon.innerHTML =
-      '<option value="">Select</options>';
+    dropdown.innerHTML =
+      '<option value="">Select</option>';
 
     states.forEach(state =>
       {
