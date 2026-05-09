@@ -46,6 +46,7 @@ async function loadStates()
       );
   }
 }
+  
 // Error Handling
 function showError(id, msg)
 {
@@ -272,16 +273,176 @@ function validateForm()
     validateConfirmPassword();
 
   if(valid)
+  {
+    document.getElementById(
+      "submitBtn"
+      ).style.display = "block";
+
+    if(document.getElementById(
+      "rememberMe"
+      ).checked)
+    {
+      const firstName =
+        document.getElementById(
+          "firstname"
+          ).value;
+
+      setCookie(
+        "firstname",
+        firstName,
+        48
+      );
+    }
+
+    else
+    {
+      deleteCookie("firstname");
+      localStorage.clear();
+    }
+}
+  else
+  {
+    document.getElementById(
+      "submitBtn"
+      ).style.display = "none";
+  }
+
+  return valid;
+}
+
+//Cookie
+function setCookie(name, value, hours)
 {
-document.getElementById("submitBtn").style.display = "block";
+  let expires = "";
+
+  if(hours)
+  {
+    const date = new Date();
+
+    date.setTime(
+      date.getTime() +
+      (hours * 60 * 60 * 1000)
+      );
+
+  expires = 
+    "; expires=" +
+    date.toUTCString();
+  }
+
+document.cookie =
+  name + "=" + value +
+  expires + "; path=/";
 }
-else
+
+function getCookie(name)
 {
-document.getElementById("submitBtn").style.display = "none";
+  const cookieArr = 
+    document.cookie.split(";");
 
+  for(let i = 0; i < cookieArr.length; i++)
+  {
+    let cookie =
+      cookieArr[i].trim();
+
+    if(cookie.indexOf(name + "=") === 0)
+    {
+      return cookie.substring(
+        name.length + 1
+        );
+    }
+ }
+  return "";
 }
 
-return valid;
+function deleteCookie(name)
+{
+  document.cookie =
+    name +
+    "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
 
-loadStates();
+function startNewUser()
+{
+  deleteCookie("firstname");
+
+localStorage.clear();
+  document
+  .querySelector("form")
+  .reset();
+
+location.reload();
+}
+const fields =
+  document.querySelectorAll(
+    "input, textarea, select"
+    );
+
+fields.forEach(field =>
+  {
+    field.addEventListener("blur", () =>
+      {
+        if(field.name !== "ssn" &&
+           field.name !== "password" &&
+           field.name !== "confirm_password")
+        {
+          localStorage.setItem(
+            field.name,
+            field.value
+            );
+        }
+      });
+  });
+
+function loadLocalStorage()
+{
+  fields.forEach(field =>
+    {
+      const savedValue =
+        localStorage.getItem(field.name);
+
+      if(savedValue)
+      {
+        field.value = savedValue;
+      }
+    });
+}
+window.onload = function()
+{
+  loadStates();
+
+  const savedName =
+    getCookie("firstname");
+
+  if(savedName !== "")
+  {
+    document.getElementById(
+      "welcomeMessage"
+      ).innerHTML =
+      "Welcome back, " + savedName;
+    
+    document.getElementById(
+      "firstname"
+      ).value = savedName;
+
+    loadLocalStorage();
+
+  document.getElementById(
+    "newUserOption"
+    ).innerHTML =
+    `<label>
+    <input type="checkbox"
+        onclick="startNewUser()">
+
+    Not ${savedName}?
+    Start as new user
+    </label>`;
+  }
+
+  else
+  {
+    document.getElementById(
+      "welcomeMessage"
+      ).innerHTML =
+        "Welcome New User";
+  }
+};
