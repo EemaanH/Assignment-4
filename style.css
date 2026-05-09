@@ -161,11 +161,10 @@ cursor: pointer;
   position: fixed;
   left: 0;
   bottom: 0;
-  
   width: 100%;
   background-color: #367588;
   color: white;
   text-align: center;
-  padding: 10px
+  padding: 10px;
   z-index: 9999;
 }
