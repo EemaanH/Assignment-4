@@ -23,7 +23,10 @@ Description:  basic Patient registration form (BETA)
   <h1>Patient Registration</h1>
     
   <p id="todayDate"></p>
-  
+
+    <h2 id="welcomeMessage"></h2>
+
+    <div id="newUserOption"></div>
 </div>
 
 <!--FORM SECTION -->
@@ -328,7 +331,6 @@ Description:  basic Patient registration form (BETA)
         </tr>
         
         <!--Reset AND Submit button -->
-
         <tr>
           <td colspan="6" align="center">
             <input type="reset" value="CLEAR AND START OVER">
@@ -337,7 +339,19 @@ Description:  basic Patient registration form (BETA)
             <!--Newly added Review button -->
             <input type="button" value= "VALIDATE" onclick="validateForm()">
             <br><br>
-            
+              
+
+                <label>
+                  <input 
+                    type="checkbox"
+                    id="rememberMe"
+                    checked>
+
+                  Remember Me
+                </label>
+
+                <br><br>
+                
             <input type="submit" id="submitBtn" value="Submit" style="display:none;">
           </td>
         </tr>
