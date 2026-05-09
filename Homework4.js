@@ -274,6 +274,23 @@ function validateForm()
 
   if(valid)
   {
+    document.getElementById("r_name").innerHTML = "Name: " +
+    document.getElementById("firstname").value + 
+    "  " +
+    document.getElementById("lastname").value;
+    document.getElementById("r_dob").innerHTML =
+    "DOB: "+
+    document.getElementById("dob").value;
+    document.getElementById("r_email").innerHTML =
+    "Email: " +
+     document.querySelector('[name="email"]').value;
+    document.getElementById("r_phone").innerHTML =
+      "Phone: " +
+    document.querySelector('[name="phone"]').value;
+    document.getElementById("r_address").innerHTML =
+      "Address: " +
+      document.querySelector('[name="address1"]').value;
+    
     document.getElementById(
       "submitBtn"
       ).style.display = "block";
